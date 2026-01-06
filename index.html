@@ -1,434 +1,389 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyen Minh Quang - Portfolio</title>
-    <link rel="stylesheet" href="portfolio.css">
+    <title>Portfolio - Nguyễn Minh Quang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            overflow: hidden; 
+        }
+
+        /* Slide Container */
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            height: 100vh;
+            width: 800vw; /* 8 Slides để chứa đầy đủ thông tin */
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            flex-shrink: 0;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        .hero-title {
+            letter-spacing: 0.1em;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        .text-outline {
+            -webkit-text-stroke: 1.5px black;
+            color: transparent;
+        }
+
+        /* Card Style - Trong suốt & Bo góc */
+        .glass-card {
+            background: transparent;
+            border: 2px solid #000000;
+            border-radius: 32px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Button Style */
+        .btn-modern {
+            border: 2px solid #000000;
+            border-radius: 99px;
+            padding: 12px 32px;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            background: white;
+            color: black;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-modern:hover {
+            background-color: #000000;
+            color: #ffffff !important;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            width: 56px;
+            height: 56px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+        .nav-arrow:hover { background: #000; color: #fff; }
+        .arrow-left { left: 25px; }
+        .arrow-right { right: 25px; }
+
+        .lang-switcher {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 101;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body { overflow-y: auto; }
+            .slider-wrapper { flex-direction: column; width: 100%; height: auto; }
+            .slide { height: auto; width: 100%; padding: 100px 20px 40px 20px; }
+            .nav-arrow { display: none; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="header">
-         <div class="language-toggle">
-            <button class="toggle-btn active" onclick="switchLanguage('en')" id="btn-en">EN</button>
-            <button class="toggle-btn" onclick="switchLanguage('vi')" id="btn-vi">VI</button>
-         </div>
-        <div class="container">
-            <div class="header-content">
-                <h1 class="main-name" data-en="Nguyen Minh Quang" data-vi="Nguyễn Minh Quang">Nguyen Minh Quang</h1>
-                <h2 class="job-title" data-en="Business Analyst" data-vi="Business Analyst">Business Analyst</h2>
-                
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <span class="contact-label">📞</span>
-                        <span class="contact-value">0867776795</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">✉️</span>
-                        <span class="contact-value">quangminec3@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">🔗</span>
-                        <span class="contact-value"><a href="http://linkedin.com/in/nguyen-quang-87b77133b">LinkedIn</a></span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">📍</span>
-                        <span class="contact-value" data-en="10C/149, Khuong Thuong, Dong Da, Hanoi" data-vi="10c/149, Khương Thượng, Đống Đa, Hà Nội">10C/149, Khuong Thuong, Dong Da, Hanoi</span>
-                    </div>
+
+    <div class="lang-switcher">
+        <button id="toggleLang" class="btn-modern">EN | VI</button>
+    </div>
+
+    <div class="nav-arrow arrow-left" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></div>
+    <div class="nav-arrow arrow-right" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></div>
+
+    <div class="slider-wrapper" id="slider">
+        
+        <section class="slide">
+            <div class="max-w-6xl text-center">
+                <p class="text-sm tracking-[0.5em] font-bold opacity-40 mb-10" data-en="PORTFOLIO — 2025" data-vi="HỒ SƠ NĂNG LỰC — 2025"></p>
+                <div class="hero-title mb-12">
+                    <h1 class="text-6xl md:text-9xl font-extrabold mb-4">NGUYỄN</h1>
+                    <h1 class="text-6xl md:text-9xl font-extrabold text-outline mb-4">MINH</h1>
+                    <h1 class="text-6xl md:text-9xl font-extrabold">QUANG</h1>
+                </div>
+                <p class="text-xl md:text-3xl font-light mb-12 tracking-widest italic opacity-80" data-en="BUSINESS ANALYST" data-vi="CHUYÊN VIÊN PHÂN TÍCH NGHIỆP VỤ"></p>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="mailto:Quangminec3@gmail.com" class="btn-modern"><i class="far fa-envelope"></i> Quangminec3@gmail.com</a>
+                    <a href="tel:0867776795" class="btn-modern"><i class="fas fa-phone"></i> 0867776795</a>
+                    <a href="https://minhqang.github.io/Portfolio/" target="_blank" class="btn-modern"><i class="fas fa-globe"></i> Portfolio</a>
                 </div>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <main class="container">
-        <!-- About Me Section -->
-        <section class="about-section">
-            <div class="card">
-                <h2 class="section-title" data-en="About Me" data-vi="Giới thiệu">About Me</h2>
-                <div class="about-content">
-                    <p class="about-text" data-en="As a recent graduate in Information Technology, I am seeking to apply for a Business Analyst position in a professional environment where I can utilize my business analysis skills, logical thinking, and eagerness to learn to contribute to operational efficiency and the development of digital solutions for businesses. My long-term goal is to develop specialized expertise in the Business Analysis field." data-vi="Là một sinh viên mới tốt nghiệp chuyên ngành Công nghệ Thông tin, tôi mong muốn ứng tuyển vào vị trí Chuyên viên Phân tích Nghiệp vụ (Business Analyst) trong một môi trường chuyên nghiệp, nơi tôi có thể vận dụng các kỹ năng phân tích nghiệp vụ, tư duy logic và tinh thần ham học hỏi để đóng góp vào hiệu quả vận hành và phát triển các giải pháp số cho doanh nghiệp. Mục tiêu dài hạn của tôi là phát triển chuyên sâu theo con đường Phân tích Nghiệp vụ.">
-                        As a recent graduate in Information Technology, I am seeking to apply for a Business Analyst position in a professional environment where I can utilize my business analysis skills, logical thinking, and eagerness to learn to contribute to operational efficiency and the development of digital solutions for businesses. My long-term goal is to develop specialized expertise in the Business Analysis field.
+        <section class="slide">
+            <div class="grid lg:grid-cols-2 gap-10 max-w-6xl w-full">
+                <div class="glass-card p-10">
+                    <h3 class="text-3xl font-extrabold mb-8 flex items-center gap-4">
+                        <i class="fas fa-bullseye text-2xl"></i> <span data-en="OBJECTIVE" data-vi="MỤC TIÊU"></span>
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed text-lg" 
+                       data-en="As a recent graduate in IT, I am seeking a fresher Business Analyst position where I can further develop my analysis skills, strengthen my logical thinking, and gain practical experience. I have accumulated initial experience through previous roles and hope to contribute to the team while continuously improving. My long-term goal is to build solid expertise in the BA field."
+                       data-vi="Là sinh viên mới tốt nghiệp ngành CNTT, tôi đang tìm kiếm vị trí Business Analyst fresher để phát triển kỹ năng phân tích, tư duy logic và tích lũy kinh nghiệm thực tế. Tôi đã tích lũy được một số kinh nghiệm ban đầu thông qua các vị trí trước đó và hy vọng sẽ đóng góp cho đội ngũ trong khi không ngừng hoàn thiện bản thân. Mục tiêu dài hạn là xây dựng chuyên môn vững chắc trong lĩnh vực BA.">
                     </p>
                 </div>
+                <div class="glass-card p-10">
+                    <h3 class="text-3xl font-extrabold mb-8 flex items-center gap-4">
+                        <i class="fas fa-graduation-cap text-2xl"></i> <span data-en="EDUCATION" data-vi="HỌC VẤN"></span>
+                    </h3>
+                    <div class="space-y-4">
+                        <h4 class="font-extrabold text-xl">Hanoi University of Natural Resources and Environment</h4>
+                        <p class="text-sm font-bold opacity-50 uppercase">May 2021 — May 2025</p>
+                        <p class="text-lg font-semibold" data-en="Major: Bachelor of Information Technology" data-vi="Chuyên ngành: Cử nhân Công nghệ thông tin"></p>
+                        <div class="flex gap-6 mt-4 font-bold text-sm">
+                            <span class="px-4 py-2 border border-black rounded-full">GPA: 7.21/10</span>
+                            <span class="px-4 py-2 border border-black rounded-full" data-en="Grade: Good" data-vi="Xếp loại: Khá"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Education Section -->
-        <section class="education-section">
-            <div class="card">
-                <h2 class="section-title" data-en="Education" data-vi="Học vấn">Education</h2>
-                <div class="education-content">
-                    <div class="education-item">
-                        <h3 class="institution" data-en="Hanoi University of Natural Resources and Environment" data-vi="Trường Đại học Tài Nguyên và Môi Trường Hà Nội">Hanoi University of Natural Resources and Environment</h3>
-                        <p class="degree" data-en="Bachelor of Information Technology" data-vi="Cử nhân Công nghệ thông tin">Bachelor of Information Technology</p>
-                        <p class="date">2021 - 2025</p>
-                        <ul class="education-details">
-                            <li data-en="Major: Software Technology" data-vi="Chuyên ngành: Công nghệ phần mềm">Major: Software Technology</li>
-                            <li data-en="Grade: Good" data-vi="Tốt nghiệp loại: Khá">Grade: Good</li>
-                            <li data-en="Favorite subjects: Information System Analysis and Design; Software Architecture and Design; Embedded System Programming (IoT); Software Testing" data-vi="Môn học yêu thích: Phân tích thiết kế hệ thống thông tin; Kiến trúc và thiết kế phần mềm; Lập trình hệ thống nhúng (IOT); Kiểm thử phần mềm">Favorite subjects: Information System Analysis and Design; Software Architecture and Design; Embedded System Programming (IoT); Software Testing</li>
+        <section class="slide">
+            <div class="max-w-6xl w-full">
+                <h3 class="text-4xl font-extrabold mb-12 text-center" data-en="WORK EXPERIENCE (1/2)" data-vi="KINH NGHIỆM LÀM VIỆC (1/2)"></h3>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="glass-card p-8">
+                        <span class="text-xs font-bold px-3 py-1 border border-black rounded-full uppercase">09/2025 — 01/2026</span>
+                        <h4 class="text-2xl font-extrabold mt-6">HiCas Software Ltd</h4>
+                        <p class="text-md font-bold mb-6 italic opacity-70">Fresher Business Analyst</p>
+                        <ul class="text-sm space-y-3 text-gray-700 leading-relaxed" 
+                            data-en="• Joined BA team in an ERP project.<br>• Participated in client meetings to clarify objectives.<br>• Collected, documented, and analyzed detailed requirements.<br>• Converted MOM into BRD/SRS, Use Case, and Activity diagrams.<br>• Created wireframes/mockups and managed tasks via Redmine.<br>• Prepared test cases for QA/Tester team." 
+                            data-vi="• Tham gia đội BA trong dự án ERP.<br>• Tham gia họp khách hàng để làm rõ mục tiêu.<br>• Thu thập, tài liệu hóa và phân tích yêu cầu chi tiết.<br>• Chuyển đổi MOM thành BRD/SRS, biểu đồ Use Case và Activity.<br>• Thiết kế wireframe/mockup và quản lý task qua Redmine.<br>• Chuẩn bị test case cho đội QA/Tester.">
+                        </ul>
+                    </div>
+                    <div class="glass-card p-8">
+                        <span class="text-xs font-bold px-3 py-1 border border-black rounded-full uppercase">12/2024 — 05/2025</span>
+                        <h4 class="text-2xl font-extrabold mt-6">MobiFone IT</h4>
+                        <p class="text-md font-bold mb-6 italic opacity-70">Back-End Developer Intern</p>
+                        <ul class="text-sm space-y-3 text-gray-700 leading-relaxed" 
+                            data-en="• Learned Golang syntax, data types, and functions.<br>• Familiarized with standard libraries and common packages.<br>• Joined IoT backend project and handled bug fixes.<br>• Gained experience in testing & debugging Golang apps.<br>• Developed ability to read technical documentation." 
+                            data-vi="• Học cú pháp Golang, kiểu dữ liệu và hàm.<br>• Làm quen với các thư viện chuẩn và package phổ biến.<br>• Tham gia dự án IoT backend và xử lý lỗi.<br>• Có kinh nghiệm testing & debugging ứng dụng Golang.<br>• Phát triển khả năng đọc hiểu tài liệu kỹ thuật.">
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
-        <section class="experience-section">
-            <div class="card">
-                <h2 class="section-title" data-en="Experience" data-vi="Kinh nghiệm làm việc">Experience</h2>
-                <div class="experience-content">
-                    
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <h3 class="role" data-en="Business Analyst & Back-End Developer Intern" data-vi="Thực tập sinh lập trình Back-End & Business Analyst">Business Analyst & Back-End Developer Intern</h3>
-                            <p class="company">MobiFone IT</p>
-                            <p class="date" data-en="December 2024 - May 2025" data-vi="12/2024 - 5/2025">December 2024 - May 2025</p>
-                        </div>
-                        <ul class="experience-details">
-                            <li data-en="Gained basic understanding of Golang programming language, including syntax, data types, and writing simple functions" data-vi="Hiểu cơ bản về ngôn ngữ lập trình Golang, bao gồm cú pháp, kiểu dữ liệu và cách viết các hàm đơn giản">Gained basic understanding of Golang programming language, including syntax, data types, and writing simple functions</li>
-                            <li data-en="Became familiar with using standard libraries and common packages in Golang" data-vi="Làm quen với việc sử dụng thư viện chuẩn và một số package thông dụng trong Golang">Became familiar with using standard libraries and common packages in Golang</li>
-                            <li data-en="Participated in developing small modules under guidance, focusing on code reading and bug fixing" data-vi="Tham gia phát triển các module nhỏ dưới sự hướng dẫn, tập trung vào đọc hiểu mã nguồn và sửa lỗi">Participated in developing small modules under guidance, focusing on code reading and bug fixing</li>
-                            <li data-en="Gained basic experience in testing and debugging Golang applications" data-vi="Có kinh nghiệm cơ bản về kiểm thử và gỡ lỗi các ứng dụng viết bằng Golang">Gained basic experience in testing and debugging Golang applications</li>
-                            <li data-en="Learned fundamental tasks of a Business Analyst, including understanding business operations, identifying functional and non-functional requirements, and analyzing basic business processes" data-vi="Đã học về các nhiệm vụ nền tảng của một Business Analyst, bao gồm tìm hiểu hoạt động kinh doanh, xác định yêu cầu chức năng và phi chức năng, phân tích các quy trình nghiệp vụ cơ bản">Learned fundamental tasks of a Business Analyst, including understanding business operations, identifying functional and non-functional requirements, and analyzing basic business processes</li>
-                        </ul>
-                    </div>
-
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <h3 class="role" data-en="Front-End Developer Intern" data-vi="Thực tập sinh lập trình Front-End">Front-End Developer Intern</h3>
-                            <p class="company">MobiFone IT</p>
-                            <p class="date" data-en="January 2024 - May 2024" data-vi="1/2024 - 5/2024">January 2024 - May 2024</p>
-                        </div>
-                        <ul class="experience-details">
-                            <li data-en="Worked with JavaScript and ReactJS, including concepts such as functional components, hooks (useState, useEffect, useContext), and state management with Redux or Context API" data-vi="Sử dụng quen thuộc JavaScript và ReactJS, bao gồm các khái niệm như component functional, hooks (useState, useEffect, useContext), quản lý trạng thái với Redux hoặc Context API">Worked with JavaScript and ReactJS, including concepts such as functional components, hooks (useState, useEffect, useContext), and state management with Redux or Context API</li>
-                            <li data-en="Gained experience in API integration and used tools like Postman for testing" data-vi="Có kinh nghiệm tích hợp API, sử dụng các công cụ như Postman để kiểm thử">Gained experience in API integration and used tools like Postman for testing</li>
-                            <li data-en="Understood concepts such as RESTful API, asynchronous programming (Promises, Async/Await), and error handling in JavaScript" data-vi="Hiểu biết về các khái niệm như RESTful API, lập trình bất đồng bộ (Promises, Async/Await) và xử lý lỗi trong JavaScript">Understood concepts such as RESTful API, asynchronous programming (Promises, Async/Await), and error handling in JavaScript</li>
-                        </ul>
-                    </div>
-
+        <section class="slide">
+            <div class="max-w-4xl w-full">
+                <h3 class="text-4xl font-extrabold mb-12 text-center" data-en="WORK EXPERIENCE (2/2)" data-vi="KINH NGHIỆM LÀM VIỆC (2/2)"></h3>
+                <div class="glass-card p-10">
+                    <span class="text-xs font-bold px-3 py-1 border border-black rounded-full uppercase">01/2024 — 05/2024</span>
+                    <h4 class="text-3xl font-extrabold mt-6">MobiFone IT</h4>
+                    <p class="text-lg font-bold mb-6 italic opacity-70">Front-End Developer Intern</p>
+                    <ul class="text-md space-y-4 text-gray-700 leading-relaxed" 
+                        data-en="• Worked with JS and ReactJS (Hooks, Redux, Context API).<br>• Gained experience in API integration and Postman testing.<br>• Understood RESTful API, Promises, and Async/Await.<br>• Assisted in UI adjustments for Vflyair project based on requirements." 
+                        data-vi="• Làm việc với JS và ReactJS (Hooks, Redux, Context API).<br>• Kinh nghiệm tích hợp API và kiểm thử bằng Postman.<br>• Hiểu về RESTful API, Promises và Async/Await.<br>• Hỗ trợ điều chỉnh giao diện dự án Vflyair theo yêu cầu.">
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section class="projects-section">
-            <div class="card">
-                <h2 class="section-title" data-en="Projects" data-vi="Dự án">Projects</h2>
-                <div class="projects-content">
-                    
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">Supply-Chain</h3>
-                            <p class="project-type" data-en="Personal Project" data-vi="Dự án cá nhân">Personal Project</p>
-                            <p class="date" data-en="January 2025 - April 2025" data-vi="1/2025 - 4/2025">January 2025 - April 2025</p>
-                            <p class="role" data-en="Role: Business Analyst & Fullstack Developer" data-vi="Vai trò: Business Analyst & Fullstack Dev">Role: Business Analyst & Fullstack Developer</p>
-                        </div>
-                        <ul class="project-details">
-                            <li data-en="Collected and analyzed user feedback and online information to identify core needs and establish application objectives" data-vi="Thu thập và phân tích phản hồi từ người dùng, thu thập thông tin trên mạng để xác định nhu cầu cốt lõi và xác lập mục tiêu cho ứng dụng">Collected and analyzed user feedback and online information to identify core needs and establish application objectives</li>
-                            <li data-en="Prepared comprehensive project documentation, including Software Requirements Specifications (SRS), use case diagrams, user stories, and functional analysis" data-vi="Soạn thảo đầy đủ tài liệu dự án, bao gồm Tài liệu Yêu cầu Phần mềm (SRS), sơ đồ use case, viết user story và phân tích chức năng">Prepared comprehensive project documentation, including Software Requirements Specifications (SRS), use case diagrams, user stories, and functional analysis</li>
-                            <li data-en="Used Figma and ReactJS to design and develop user interfaces, focusing on user-friendliness and user experience (UI/UX)" data-vi="Sử dụng Figma và ReactJS để thiết kế và phát triển giao diện người dùng, tập trung vào tính thân thiện và trải nghiệm người dùng (UI/UX)">Used Figma and ReactJS to design and develop user interfaces, focusing on user-friendliness and user experience (UI/UX)</li>
-                            <li data-en="Implemented backend system, applied blockchain technology to increase transparency and traceability in supply chain using Solidity language" data-vi="Triển khai hệ thống backend, ứng dụng công nghệ blockchain nhằm tăng tính minh bạch và khả năng truy xuất nguồn gốc trong chuỗi cung ứng sử dụng ngôn ngữ Solidity">Implemented backend system, applied blockchain technology to increase transparency and traceability in supply chain using Solidity language</li>
-                            <li data-en="Conducted functional testing and bug fixes to ensure application completeness" data-vi="Thực hiện kiểm thử các chức năng và sửa lỗi để đảm bảo sự hoàn thiện của ứng dụng">Conducted functional testing and bug fixes to ensure application completeness</li>
-                            <span data-en="You can see my project source code here: " data-vi="Bạn có thể xem mã nguồn dự án của tôi tại đây: ">You can see my project source code here: </span>
-                            <a href="https://gitlab.com/blockchain6334510/supply-chain">Supply-chain</a>
-                        </ul>
-                    </div>
-
-                    <div class="project-item">
-                        <div class="project-header">
-                            <h3 class="project-name">GUHA Perfume Shop</h3>
-                            <p class="project-type" data-en="Group Project (5 members)" data-vi="Dự án nhóm (5 người)">Group Project (5 members)</p>
-                            <p class="date" data-en="August 2023 - October 2023" data-vi="8/2023 - 10/2023">August 2023 - October 2023</p>
-                            <p class="role" data-en="Role: Business Analyst & Front-End Developer" data-vi="Vai trò: Business Analyst & Front-End Dev">Role: Business Analyst & Front-End Developer</p>
-                        </div>
-                        <ul class="project-details">
-                            <li data-en="Conducted field surveys at perfume shops to understand daily operations and identify business requirements" data-vi="Tiến hành khảo sát thực tế tại các cửa hàng nước hoa để hiểu quy trình vận hành hàng ngày và xác định các yêu cầu nghiệp vụ">Conducted field surveys at perfume shops to understand daily operations and identify business requirements</li>
-                            <li data-en="Analyzed functional requirements and designed a simple system to support main business operations such as product, order, and customer management" data-vi="Phân tích nhu cầu chức năng và thiết kế một hệ thống đơn giản hỗ trợ các nghiệp vụ chính như quản lý sản phẩm, đơn hàng và khách hàng">Analyzed functional requirements and designed a simple system to support main business operations such as product, order, and customer management</li>
-                            <li data-en="Built basic workflow diagrams, function decomposition, and use case scenarios to clarify system behavior" data-vi="Xây dựng sơ đồ quy trình làm việc cơ bản, phân rã chức năng và kịch bản use case nhằm làm rõ hành vi hệ thống">Built basic workflow diagrams, function decomposition, and use case scenarios to clarify system behavior</li>
-                            <li data-en="Designed simple, user-friendly interfaces suitable for shop owners and staff with limited technical knowledge" data-vi="Thiết kế giao diện đơn giản, thân thiện với người dùng, phù hợp với chủ cửa hàng và nhân viên có ít kiến thức kỹ thuật">Designed simple, user-friendly interfaces suitable for shop owners and staff with limited technical knowledge</li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="skills-section">
-            <div class="card">
-                <h2 class="section-title" data-en="Skills" data-vi="Kỹ năng">Skills</h2>
-                <div class="skills-content grid">
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title" data-en="Technical Skills" data-vi="Kỹ năng chuyên môn">Technical Skills</h3>
-                        <div class="skill-subcategory">
-                            <h4 data-en="Business Analysis" data-vi="Phân tích nghiệp vụ">Business Analysis</h4>
-                            <div class="skill-list">
-                                <span class="skill-tag">BRD/FRD/SRS</span>
-                                <span class="skill-tag">User Stories</span>
-                                <span class="skill-tag">BPMN</span>
-                                <span class="skill-tag">UX/UI</span>
-                                <span class="skill-tag">Agile & Scrum</span>
-                                <span class="skill-tag" data-en="Market Research" data-vi="Nghiên cứu thị trường">Market Research</span>
+        <section class="slide">
+            <div class="max-w-6xl w-full grid lg:grid-cols-2 gap-10">
+                <div class="glass-card p-10">
+                    <h3 class="text-3xl font-extrabold mb-10" data-en="TECHNICAL SKILLS" data-vi="KỸ NĂNG CHUYÊN MÔN"></h3>
+                    <div class="space-y-8">
+                        <div>
+                            <p class="text-xs font-black uppercase tracking-tighter mb-4 opacity-40">Business Analysis</p>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="btn-modern py-1 px-4 text-xs">Systems Analysis</span>
+                                <span class="btn-modern py-1 px-4 text-xs">BRD/FRD/SRS/MOM</span>
+                                <span class="btn-modern py-1 px-4 text-xs">User Story</span>
+                                <span class="btn-modern py-1 px-4 text-xs">BPMN</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Market Research</span>
+                                <span class="btn-modern py-1 px-4 text-xs">UX/UI</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Agile & Scrum</span>
                             </div>
                         </div>
-                        <div class="skill-subcategory">
-                            <h4 data-en="Programming" data-vi="Lập trình">Programming</h4>
-                            <div class="skill-list">
-                                <span class="skill-tag">SQL</span>
-                                <span class="skill-tag">Python (Basic)</span>
-                                <span class="skill-tag">JavaScript</span>
-                                <span class="skill-tag">ReactJS</span>
-                                <span class="skill-tag">Golang (Basic)</span>
-                                <span class="skill-tag">Solidity</span>
-                            </div>
-                        </div>
-                        <div class="skill-subcategory">
-                            <h4 data-en="Tools" data-vi="Công cụ">Tools</h4>
-                            <div class="skill-list">
-                                <span class="skill-tag">Postman</span>
-                                <span class="skill-tag">Git/GitHub</span>
-                                <span class="skill-tag">VS Code</span>
-                                <span class="skill-tag">Microsoft Office</span>
-                                <span class="skill-tag">Figma</span>
-                                <span class="skill-tag">Draw.io</span>
-                                <span class="skill-tag">Jira</span>
+                        <div>
+                            <p class="text-xs font-black uppercase tracking-tighter mb-4 opacity-40">Development & Tools</p>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="btn-modern py-1 px-4 text-xs">SQL</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Python</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Postman</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Figma</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Jira/Redmine</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Git/GitHub</span>
+                                <span class="btn-modern py-1 px-4 text-xs">Draw.io</span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="skill-category">
-                        <h3 class="skill-category-title" data-en="Soft Skills" data-vi="Kỹ năng mềm">Soft Skills</h3>
-                        <div class="skill-list">
-                            <span class="skill-tag" data-en="Analytical Thinking" data-vi="Tư duy phân tích">Analytical Thinking</span>
-                            <span class="skill-tag" data-en="Problem Solving" data-vi="Giải quyết vấn đề">Problem Solving</span>
-                            <span class="skill-tag" data-en="Documentation" data-vi="Trình bày tài liệu">Documentation</span>
-                            <span class="skill-tag" data-en="Presentation" data-vi="Thuyết trình">Presentation</span>
-                            <span class="skill-tag" data-en="Communication" data-vi="Giao tiếp">Communication</span>
-                            <span class="skill-tag" data-en="Teamwork" data-vi="Làm việc nhóm">Teamwork</span>
-                            <span class="skill-tag" data-en="Self-Learning" data-vi="Tự học">Self-Learning</span>
-                            <span class="skill-tag" data-en="Independent Work" data-vi="Làm việc độc lập">Independent Work</span>
+                </div>
+                <div class="glass-card p-10 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-extrabold mb-10" data-en="SOFT SKILLS" data-vi="KỸ NĂNG MỀM"></h3>
+                        <div class="flex flex-wrap gap-4">
+                            <span class="text-sm font-bold border-b-2 border-black pb-1" data-en="Analytical thinking" data-vi="Tư duy phân tích"></span>
+                            <span class="text-sm font-bold border-b-2 border-black pb-1" data-en="Problem-solving" data-vi="Giải quyết vấn đề"></span>
+                            <span class="text-sm font-bold border-b-2 border-black pb-1" data-en="Communication" data-vi="Giao tiếp"></span>
+                            <span class="text-sm font-bold border-b-2 border-black pb-1" data-en="Teamwork" data-vi="Làm việc nhóm"></span>
+                            <span class="text-sm font-bold border-b-2 border-black pb-1" data-en="Self-learning" data-vi="Tự học"></span>
                         </div>
                     </div>
-
+                    <div class="mt-10">
+                        <h3 class="text-3xl font-extrabold mb-8" data-en="LANGUAGE" data-vi="NGOẠI NGỮ"></h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-xs font-black mb-2 uppercase"><span>English R/W</span><span>Intermediate</span></div>
+                                <div class="w-full h-1.5 bg-gray-100 rounded-full border border-black overflow-hidden"><div class="h-full bg-black" style="width: 75%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-black mb-2 uppercase"><span>English S/L</span><span>Basic</span></div>
+                                <div class="w-full h-1.5 bg-gray-100 rounded-full border border-black overflow-hidden"><div class="h-full bg-black" style="width: 45%"></div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Languages Section -->
-        <section class="languages-section">
-            <div class="card">
-                <h2 class="section-title" data-en="Languages" data-vi="Ngôn ngữ">Languages</h2>
-                <div class="languages-content">
-                    <div class="language-item">
-                        <h3 data-en="English" data-vi="Tiếng Anh">English</h3>
-                        <ul>
-                            <li data-en="Able to read and understand technical documentation" data-vi="Có khả năng đọc hiểu các tài liệu kỹ thuật">Able to read and understand technical documentation</li>
-                            <li data-en="Basic communication skills" data-vi="Giao tiếp cơ bản">Basic communication skills</li>
+        <section class="slide">
+            <div class="max-w-7xl w-full">
+                <h3 class="text-4xl font-extrabold mb-12 text-center" data-en="KEY PROJECTS (1/2)" data-vi="DỰ ÁN TIÊU BIỂU (1/2)"></h3>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="glass-card p-8">
+                        <h4 class="text-2xl font-black mb-4 uppercase">Supply-Chain (Personal)</h4>
+                        <p class="text-xs font-bold opacity-40 mb-4">Feb 2024 — Apr 2025</p>
+                        <p class="text-sm font-bold mb-4 italic">Developer & Business Analyst</p>
+                        <ul class="text-[13px] space-y-2 text-gray-700 leading-relaxed" 
+                            data-en="• Analyzed user feedback to identify core needs.<br>• Prepared SRS, use cases, and functional analysis.<br>• Designed UI using Figma and ReactJS.<br>• Applied blockchain (Solidity) for transparency and traceability.<br>• Conducted functional testing and bug fixes." 
+                            data-vi="• Phân tích phản hồi người dùng để xác định nhu cầu.<br>• Chuẩn bị SRS, use case và phân tích chức năng.<br>• Thiết kế giao diện bằng Figma và ReactJS.<br>• Ứng dụng blockchain (Solidity) để tăng tính minh bạch.<br>• Kiểm thử chức năng và sửa lỗi hệ thống.">
                         </ul>
                     </div>
-                    <div class="language-item">
-                        <h3 data-en="Vietnamese" data-vi="Tiếng Việt">Vietnamese</h3>
-                        <ul>
-                            <li data-en="Native speaker" data-vi="Ngôn ngữ mẹ đẻ">Native speaker</li>
+                    <div class="glass-card p-8">
+                        <h4 class="text-2xl font-black mb-4 uppercase">GUHA Perfume Shop</h4>
+                        <p class="text-xs font-bold opacity-40 mb-4">Aug 2023 — Oct 2023</p>
+                        <p class="text-sm font-bold mb-4 italic">Frontend Developer & BA</p>
+                        <ul class="text-[13px] space-y-2 text-gray-700 leading-relaxed" 
+                            data-en="• Conducted surveys to understand perfume shop operations.<br>• Analyzed functional requirements for product/order management.<br>• Built workflow diagrams and use case scenarios.<br>• Designed user-friendly interfaces for non-technical staff.<br>• Prepared system specification and improvement documents." 
+                            data-vi="• Khảo sát thực tế để hiểu vận hành cửa hàng nước hoa.<br>• Phân tích yêu cầu chức năng quản lý sản phẩm/đơn hàng.<br>• Xây dựng biểu đồ quy trình và kịch bản use case.<br>• Thiết kế giao diện thân thiện cho nhân viên ít chuyên môn.<br>• Chuẩn bị đặc tả hệ thống và đề xuất cải tiến.">
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Interests Section -->
-        <section class="interests-section">
-            <div class="card">
-                <h2 class="section-title" data-en="Interests" data-vi="Sở thích">Interests</h2>
-                <div class="interests-content">
-                    <div class="interest-grid">
-                        <div class="interest-item">
-                            <h3>📚</h3>
-                            <p data-en="Reading and collecting books" data-vi="Đọc và sưu tầm sách">Reading and collecting books</p>
-                        </div>
-                        <div class="interest-item">
-                            <h3>🍳</h3>
-                            <p data-en="Learning and cooking new dishes" data-vi="Học và nấu các món ăn mới">Learning and cooking new dishes</p>
-                        </div>
-                        <div class="interest-item">
-                            <h3>🏸</h3>
-                            <p data-en="Playing badminton" data-vi="Chơi cầu lông">Playing badminton</p>
-                        </div>
-                        <div class="interest-item">
-                            <h3>🔧</h3>
-                            <p data-en="Searching, collecting, and repairing technology items" data-vi="Tìm kiếm, sưu tầm và sửa chữa đồ công nghệ">Searching, collecting, and repairing technology items</p>
+        <section class="slide">
+            <div class="max-w-7xl w-full">
+                <h3 class="text-4xl font-extrabold mb-12 text-center" data-en="KEY PROJECTS (2/2)" data-vi="DỰ ÁN TIÊU BIỂU (2/2)"></h3>
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <div class="glass-card p-6">
+                        <h4 class="font-black mb-2 uppercase">Hawee ERP</h4>
+                        <p class="text-[10px] font-bold opacity-40 mb-4">Sep 2025 — Jan 2026</p>
+                        <p class="text-xs font-bold mb-4 italic">Business Analyst</p>
+                        <ul class="text-[11px] space-y-2 text-gray-700" 
+                            data-en="• Clarified objectives in client meetings.<br>• Documented BRD/SRS and diagrams.<br>• Created wireframes via Figma.<br>• Managed tasks on Redmine.<br>• Prepared test cases for QA." 
+                            data-vi="• Làm rõ mục tiêu trong họp khách hàng.<br>• Tài liệu hóa BRD/SRS và biểu đồ.<br>• Thiết kế wireframe qua Figma.<br>• Quản lý task trên Redmine.<br>• Chuẩn bị test case cho QA.">
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6">
+                        <h4 class="font-black mb-2 uppercase">Vflyair</h4>
+                        <p class="text-[10px] font-bold opacity-40 mb-4">Jan 2024 — May 2024</p>
+                        <p class="text-xs font-bold mb-4 italic">Frontend Developer</p>
+                        <ul class="text-[11px] space-y-2 text-gray-700" 
+                            data-en="• Enhanced UI/UX based on feedback.<br>• Modified interface components.<br>• Fixed UI/UX bugs for stability." 
+                            data-vi="• Nâng cấp UI/UX dựa trên phản hồi.<br>• Chỉnh sửa các thành phần giao diện.<br>• Sửa lỗi UI/UX đảm bảo ổn định.">
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6">
+                        <h4 class="font-black mb-2 uppercase">ToDoApp (Django)</h4>
+                        <p class="text-[10px] font-bold opacity-40 mb-4">Personal Project</p>
+                        <p class="text-xs font-bold mb-4 italic">Developer</p>
+                        <ul class="text-[11px] space-y-2 text-gray-700" 
+                            data-en="• Implemented CRUD for tasks.<br>• Used Django Models, Views, Templates.<br>• Integrated SQLite database.<br>• Practice version control with Git." 
+                            data-vi="• Triển khai CRUD quản lý task.<br>• Dùng Django Models, Views, Templates.<br>• Tích hợp cơ sở dữ liệu SQLite.<br>• Thực hành quản lý mã nguồn qua Git.">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <div class="max-w-4xl text-center">
+                <h2 class="text-5xl md:text-8xl font-black mb-12 tracking-tighter" data-en="LET'S WORK TOGETHER" data-vi="HÃY CÙNG HỢP TÁC"></h2>
+                <p class="text-xl opacity-60 mb-16" data-en="I am ready to bring value to your projects as a Business Analyst." data-vi="Tôi đã sẵn sàng mang lại giá trị cho dự án của bạn với vai trò BA."></p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-10">
+                    <div class="text-left">
+                        <p class="text-xs font-black opacity-30 mb-2 uppercase">Address</p>
+                        <p class="font-bold">Đống Đa, Hà Nội</p>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-xs font-black opacity-30 mb-2 uppercase">Email</p>
+                        <p class="font-bold">Quangminec3@gmail.com</p>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-xs font-black opacity-30 mb-2 uppercase">Social</p>
+                        <div class="flex gap-4 mt-2">
+                            <a href="https://www.linkedin.com/in/nguyen-quang-87b77133b/" class="text-xl hover:opacity-50 transition"><i class="fab fa-linkedin"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="card">
-                <p class="footer-text" data-en="© 2025 Nguyen Minh Quang. All rights reserved." data-vi="© 2025 Nguyen Minh Quang. Tất cả quyền được bảo lưu.">© 2025 Nguyen Minh Quang. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Language switching functionality
-        let currentLanguage = 'en';
+        let currentSlide = 0;
+        const totalSlides = 8;
+        const slider = document.getElementById('slider');
+        const langBtn = document.getElementById('toggleLang');
+        let currentLang = 'vi';
 
-        function switchLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update toggle buttons
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
-            
-            // Update all elements with data attributes
-            const elements = document.querySelectorAll('[data-en][data-vi]');
-            elements.forEach(element => {
-                if (lang === 'en') {
-                    element.textContent = element.getAttribute('data-en');
-                } else {
-                    element.textContent = element.getAttribute('data-vi');
-                }
-            });
-            
-            // Update document language
-            document.documentElement.lang = lang;
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
         }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            switchLanguage('en');
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') moveSlide(1);
+            if (e.key === 'ArrowLeft') moveSlide(-1);
         });
 
-        // Smooth scrolling for anchor links (if you add navigation later)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'vi' : 'en';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
             });
+            langBtn.innerText = currentLang === 'en' ? 'VI | EN' : 'EN | VI';
         });
 
-        // Add some interactive effects
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                    this.style.transition = 'transform 0.3s ease';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-
-            // Add click effects to skill tags
-            const skillTags = document.querySelectorAll('.skill-tag');
-            skillTags.forEach(tag => {
-                tag.addEventListener('click', function() {
-                    this.style.transform = 'scale(1.1)';
-                    this.style.transition = 'transform 0.2s ease';
-                    
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 200);
-                });
-            });
+        // Khởi tạo ngôn ngữ mặc định là tiếng Việt
+        document.querySelectorAll('[data-vi]').forEach(el => {
+            el.innerHTML = el.getAttribute('data-vi');
         });
-
-        // Add typing effect to the main title (optional)
-        function typeWriter(element, text, delay = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, delay);
-                }
-            }
-            
-            type();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.card');
-
-    const observerOptions = {
-        root: null, // viewport
-        rootMargin: '0px',
-        threshold: 0.1 // 10% của card phải visible để kích hoạt
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Card đang trong viewport
-                if (!entry.target.classList.contains('appear')) {
-                    entry.target.classList.add('appear');
-                    // Tùy chọn: Ngừng quan sát sau khi đã xuất hiện để cải thiện hiệu suất
-                    // observer.unobserve(entry.target);
-                }
-            } else {
-                // Tùy chọn: Nếu muốn hiệu ứng reset khi cuộn ra ngoài
-                // entry.target.classList.remove('appear');
-            }
-        });
-    }, observerOptions);
-
-    cards.forEach(card => {
-        observer.observe(card);
-    });
-
-    // Logic cho chuyển đổi ngôn ngữ (nếu bạn có)
-    const langToggleEn = document.getElementById('btn-en');
-    const langToggleVi = document.getElementById('btn-vi');
-    const elementsToTranslate = document.querySelectorAll('[data-en], [data-vi]');
-
-    function switchLanguage(lang) {
-        elementsToTranslate.forEach(el => {
-            if (el.dataset[lang]) {
-                el.textContent = el.dataset[lang];
-            }
-        });
-
-        if (lang === 'en') {
-            langToggleEn.classList.add('active');
-            langToggleVi.classList.remove('active');
-        } else {
-            langToggleVi.classList.add('active');
-            langToggleEn.classList.remove('active');
-        }
-    }
-
-    // Thiết lập ngôn ngữ mặc định hoặc từ localStorage
-    const savedLang = localStorage.getItem('portfolioLang') || 'vi';
-    switchLanguage(savedLang);
-
-    langToggleEn.addEventListener('click', () => {
-        switchLanguage('en');
-        localStorage.setItem('portfolioLang', 'en');
-    });
-
-    langToggleVi.addEventListener('click', () => {
-        switchLanguage('vi');
-        localStorage.setItem('portfolioLang', 'vi');
-    });
-});
-
-        // Uncomment to add typing effect to name
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const nameElement = document.querySelector('.main-name');
-        //     typeWriter(nameElement, 'Nguyen Minh Quang', 150);
-        // });
     </script>
 </body>
 </html>
